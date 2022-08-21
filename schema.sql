@@ -27,18 +27,55 @@ CREATE TABLE IF NOT EXISTS purchases (
 
 -- TODO: add income table
 
--- ALTER TABLE purchases
--- ALTER COLUMN user_id
--- DROP NOT NULL;
+ALTER TABLE purchases
+ALTER COLUMN user_id
+DROP NOT NULL;
 
--- ALTER TABLE purchases
--- ALTER COLUMN amount
--- DROP NOT NULL;
+ALTER TABLE purchases
+ALTER COLUMN amount
+DROP NOT NULL;
 
--- ALTER TABLE purchases
--- ALTER COLUMN unit_price
--- DROP NOT NULL;
+ALTER TABLE purchases
+ALTER COLUMN unit_price
+DROP NOT NULL;
 
--- ALTER TABLE purchases
--- ALTER COLUMN place
--- DROP NOT NULL;
+ALTER TABLE purchases
+ALTER COLUMN place
+DROP NOT NULL;
+
+ALTER TABLE purchases
+ADD COLUMN purchase_date TIMESTAMP NOT NULL;
+
+ALTER TABLE purchases
+ADD COLUMN order_id VARCHAR(255) NOT NULL;
+
+/*
+CREATE TABLE orders
+order_id
+Qtd. total de itens:12
+Valor a pagar R$:70,61
+Forma de pagamento:Valor pago R$:
+3 - Cartão de Crédito70,61
+url_nfe
+purchase_date
+*/
+
+CREATE TABLE IF NOT EXISTS orders (
+  id serial PRIMARY KEY,
+  total_items INTEGER NOT NULL,
+  total_price INTEGER NOT NULL,
+  payment_method VARCHAR(255) NOT NULL,
+  url_nfe VARCHAR(255) NOT NULL,
+  purchase_date TIMESTAMP NOT NULL DEFAULT NOW(),
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE purchases 
+ALTER COLUMN order_id 
+TYPE INTEGER 
+USING (trim(order_id)::integer);
+
+ALTER TABLE purchases
+ADD CONSTRAINT purchase_order_id_fk 
+FOREIGN KEY (order_id) 
+REFERENCES orders (id);
