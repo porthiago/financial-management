@@ -49,17 +49,6 @@ ADD COLUMN purchase_date TIMESTAMP NOT NULL;
 ALTER TABLE purchases
 ADD COLUMN order_id VARCHAR(255) NOT NULL;
 
-/*
-CREATE TABLE orders
-order_id
-Qtd. total de itens:12
-Valor a pagar R$:70,61
-Forma de pagamento:Valor pago R$:
-3 - Cartão de Crédito70,61
-url_nfe
-purchase_date
-*/
-
 CREATE TABLE IF NOT EXISTS orders (
   id serial PRIMARY KEY,
   total_items INTEGER NOT NULL,
